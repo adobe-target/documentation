@@ -4,9 +4,9 @@ seo-title: How to Validate Adobe Target for Your Mobile App
 title: How to Validate Adobe Target for your mobile app
 ---
 
-# How to Validate Adobe Target for your mobile app{#how-to-validate-Adobe-Target-for-your-mobile-app}
+# How to Validate Adobe Target (v4) for your mobile app{#how-to-validate-Adobe-Target-for-your-mobile-app}
 
-The Adobe Target SDK can be validated on your mobile app by using an Android Emulator & reviewing verbose logging in your Android IDE environment. This article demonstrates how to use the Android Studio IDE to debug Target server calls.  
+The Adobe Target SDK version 4 can be validated on your mobile app by using an Android Emulator & reviewing verbose logging in your Android IDE environment. This article demonstrates how to use the Android Studio IDE to debug Target server calls.  
 
 ## Validate with an Emulator
 
