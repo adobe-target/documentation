@@ -189,30 +189,3 @@ The scenario above (Request Multiple Target Locations in one Call) also demonstr
 
 ## Clearing Prefetched Locations from Cache
 Suppose a special add-on offer was prefetched and cached on the booking > seating screen. A user may revisit that screen later. However, if the user decides to change the bus line during the app session, the prefetched offer should be cleared so a new offer for the new bus line can display. All prefetched locations are cleared with the **Target.clearPrefetchCache()** method.
- 
-
-
-
-
-------------
-
-LINK EXAMPLE:   *[success metric](../c-activities/r-success-metrics/success-metrics.md#reference_D011575C85DA48E989A244593D9B9924)* 
-
-
-TABLE Example:
-
-| metadata | what it does |
-|--- |--- |
-| solution-title | Used in article header as link |
-| solution-hub-url | Opens helpx hub page |
-| solution-icon | Displays solution icon next to solution title. Not yet implemented |
-| getting-started-url | Link to helpx getting started page |
-| tutorials-url | Link to video tutorials--either helpx tutorials or KT tutorials |
-| mini-toc-levels | Determines the number of heading levels that appear in right rail. default is 2 |
-| git-repo | Specifies the location of the master repo for internal use |
-
-NOTE EXAMPLE:
->[!NOTE]
->
->Adobe Delivery infrastructure is being secured to NOT support TLS 1.0 devices 
-
