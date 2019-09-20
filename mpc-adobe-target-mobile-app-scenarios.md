@@ -5,7 +5,7 @@ title: Adobe Target location request scenarios
 ---
 
 # Adobe Target Location Request Scenarios
-The Adobe Mobile Services SDK provides Adobe Target methods & functionality that enable you customize your mobile app experiences.
+The Adobe Mobile Services SDK version 4 provides Adobe Target methods & functionality that enable you customize your mobile app experiences.
 
 
 
@@ -13,9 +13,9 @@ The Adobe Mobile Services SDK provides Adobe Target methods & functionality that
 This article discusses multiple scenarios using a sample travel app. The app has a search feature that finds available bus routes. The app will be used for demonstration purposes.
 
 * Target locations are prefetched on the home screen, so no Target content appears, but locations are cached in the device behind the scene
-* The search results screen loads a Target location and displays a text result from the Target server.
-
-![](images/travel_app2.jpg) 
+* The search results screen loads a Target location and displays banners based off a JSON offer loaded from the Target server. 
+![](images/travel_app2.jpg)
+ 
  
 ## Use a Prefetch "Blocking" Request
 Configuring Target methods as prefetch "blocking" requests provides two main benefits:
@@ -46,14 +46,15 @@ private void setUp() {
 // This example loads a prefetch request and then calls setUp():
 
 public void targetPrefetchContent() {
-	List<TargetPrefetchObject> prefetchList = new ArrayList<>();
-	Map<String, Object> profileParameters;
-	profileParameters = new HashMap<String, Object>();
-	profileParameters.put("ProfileParam8Aug", "25");
-	Map<String, Object> mboxParameters1 = new HashMap<String, Object>();
-	mboxParameters1.put("MboxParam8Aug", "1");
-	prefetchList.add(Target.createTargetPrefetchObject("mboxTest", mboxParameters1));
-	Target.TargetCallback<Boolean> prefetchStatusCallback = new 	Target.TargetCallback<Boolean>() {
+    List<TargetPrefetchObject> prefetchList = new ArrayList<>();
+    Map<String, Object> profileParameters;
+    profileParameters = new HashMap<String, Object>();
+    profileParameters.put("ProfileParam18Sep", "1");
+    Map<String, Object> mboxParameters1 = new HashMap<String, Object>();
+    mboxParameters1.put("MboxParam18Sep", "1");
+    mboxParameters1.put("at_property", "7962ac68-17db-1579-408f-9556feccb477");
+    prefetchList.add(Target.createTargetPrefetchObject("mboxTest3", mboxParameters1));
+    Target.TargetCallback<Boolean> prefetchStatusCallback = new Target.TargetCallback<Boolean>() {
         @Override
         public void call(final Boolean status) {
             HomeActivity.this.runOnUiThread(new Runnable() {
@@ -67,29 +68,43 @@ public void targetPrefetchContent() {
         }};
     Target.prefetchContent(prefetchList, profileParameters, prefetchStatusCallback);
 }
+
 ```
 
 ## Use a Live Location Request
 On the bus results screen, if we wanted to display an offer related to the bus destination, a live location request should be called for that offer instead of a prefetched location. This is because the offer needs to be changed depending on where the user wants to travel to. Prefetched locations could be used with other elements on the screen not related to the destination (like general discounts or promotions). 
 
+#### JSON Offers
+This demo uses JSON offers to determine which banners to display. In the Target interface, create JSON offers for each experience:
+
+![](images/json_offers.jpg)
+
 #### Code Example
-A live location request is called with the **Target.loadRequest()** method:
+A live location request is called with the **Target.loadRequest()** method. This request below calls the JSON offer, retrieves an ID element from the JSON object, and uses that ID to determine the right assets to display.
 
 ```
-private void targetLoadRequest() {
-    Target.loadRequest("mboxTest", "TargetPreviewMboxTest_defaultContent", null, null, null, new Target.TargetCallback<String>() {
+// SINGLE MBOX SCENARIO - JSON OFFER
+public void targetLoadRequest() {
+    Map<String, Object> mboxParam;
+    mboxParam = new HashMap<String, Object>();
+    mboxParam.put("at_property", "7962ac68-17db-1579-408f-9556feccb477");
+    Target.loadRequest("mboxTest3", "----default_mbox----", null, null, mboxParam, new Target.TargetCallback<String>() {
         @Override
         public void call(final String s) {
-            runOnUiThread(new Runnable() {
+            SearchBusActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("Loaded content :" + s);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            tvBusFound.setText(tvBusFound.getText().toString() + ": " + s);
-                        }
-                    });
+                    try {
+                        JSONObject obj = new JSONObject(s);
+                        banner_id = obj.getInt("id");
+                    } catch (
+                            Throwable t) {
+                        Log.e("My App", "Could not parse malformed JSON: \"" + s + "\"");
+                    }
+
+                    setUpSearch();
+                    getSearchData();
+
                 }
             });
         }
@@ -98,67 +113,91 @@ private void targetLoadRequest() {
 
 ```
 
+In the demo app's getSearchData() method, add the returned banner_id (and the next banner if desired):
+
+```
+// FIND BANNER DETERMINED BY ADOBE TARGET OFFER
+searchOffersList.add(offerList.get(banner_id));
+searchOffersList.add(offerList.get(banner_id+1));
+//searchOffersList.addAll(offerList);
+searchOffersAdapter.notifyDataSetChanged();
+```
+
 
 ## Request Multiple Target Locations in one Call 
-To display multiple offers on the Bus Results Screen, multiple target locations can be requested in a single call:
+To display multiple mboxes on the Bus Results Screen, multiple target locations can be requested in a single call. In this example, we'll display one mbox in the top offer area of the screen, and another mbox just above the bus search results.
+
+Multiple mboxes are built & displayed as follows:
 
 * Create a TargetRequestObject for each location
 * Add each TargetRequestObject to an Array
 * Add the Array to the **Target.loadRequests()** method and call the locations
  
 #### Code Example
-Here is an example from the Bus Results activity. The code is called from the activity's onResume() method:
+Here is an example from the Bus Results activity. The code is called from the activity's onResume() method. Note that the parameters for the createTargetRequestObject() method are in a different order than the targetLoadRequest() method.
 
 ```
-private void targetLoadRequests() {
+// MULTIPLE MBOX SCENARIOS- 2 JSON OFFERS
+public void targetLoadRequests() {
 
 // Create Multiple Target Location Requests & send in one loadRequests() call
 
 // 1st Location
-TargetRequestObject request1 = Target.createTargetRequestObject("mboxTest", "TargetPreviewMboxTest_defaultContent", null, new Target.TargetCallback<String>() {
+Map<String, Object> mboxParam;
+mboxParam = new HashMap<String, Object>();
+mboxParam.put("at_property", "7962ac68-17db-1579-408f-9556feccb477");
+TargetRequestObject request1 = Target.createTargetRequestObject("mboxTest3", "--mboxTest3_default--", mboxParam, null, null, new Target.TargetCallback<String>() {
     @Override
     public void call(final String s) {
-        runOnUiThread(new Runnable() {
+        SearchBusActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                System.out.println("Loaded content :" + s);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        tvBusFound.setText(tvBusFound.getText().toString() + ": " + s);
-                    }
-                });
+                try {
+                    JSONObject obj = new JSONObject(s);
+                    banner_id = obj.getInt("id");
+                } catch (
+                        Throwable t) {
+                    Log.e("My App", "Could not parse malformed JSON: \"" + s + "\"");
+                }
             }
         });
     }
 });
 
 // 2nd Location
-TargetRequestObject request2 = Target.createTargetRequestObject("mboxTest2", "TargetPreviewMboxTest_defaultContent2", null, new Target.TargetCallback<String>() {
-    @Override
-    public void call(final String s) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("Loaded content :" + s);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        tvBusFound.setText(tvBusFound.getText().toString() + ": " + s);
-                    }
-                });
+TargetRequestObject request2 = Target.createTargetRequestObject("mboxTest4", "--mboxTest4_default--", mboxParam, null, null, new Target.TargetCallback<String>() {
+@Override
+public void call(final String s) {
+    SearchBusActivity.this.runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+            try {
+                // Get JSON Offer name
+                JSONObject obj2 = new JSONObject(s);
+                String offer2_name = obj2.getString("offer2_name");
+                Log.d("Sent:", s);
+
+                // Get 2nd banner based on JSON offer name & display above Bus results
+                ImageView target_banner = findViewById(R.id.target_banner);
+                int offer2_id = getResources().getIdentifier(offer2_name, "drawable", getPackageName());
+                target_banner.setImageResource(offer2_id);
+            } catch (
+                    Throwable t) {
+                Log.e("My App", "Could not parse malformed JSON: \"" + s + "\"");
             }
-        });
-    }
+        }
+    });
+}
 });
 
 // Create Array of both requests
 List<TargetRequestObject> locationRequests = new ArrayList<>();
-    locationRequests.add(request1);
-    locationRequests.add(request2);
+locationRequests.add(request1);
+locationRequests.add(request2);
 
 // Send Location Requests
 Target.loadRequests(locationRequests, null);
+setUpSearch();
 
 }
 
@@ -167,52 +206,13 @@ Target.loadRequests(locationRequests, null);
 #### Result:
 2 Target locations are displayed on the screen:
 
-![](images/travel_app_2_locations.jpg)
+![](images/2mboxes.jpg)
 
 
 ## Combining Prefetch & Live Location Requests
-The scenario above (Request Multiple Target Locations in one Call) also demonstrates how to request a prefetched location ("mboxTest" was prefetched on the home screen) and a live location request from the server, both in a single call. This can be done with the **Target.loadRequests()** method.
+The scenario above (Request Multiple Target Locations in one Call) also demonstrates how to request a prefetched location ("mboxTest3<!---->" was prefetched on the home screen) and a live location request from the server, both in a single call. This can be done with the **Target.loadRequests()** method.
 
->Nimit, Vinay,
->
->For the prefetch location & live location scenario - my understanding is that
->there are two pieces to it:
->
->* 1) There is a way to request a live location & prefetch/cache a location in the
->same call.  I see a way with the Target REST API but I’m not finding a way with 
->the Java library. It can easily be done with 2 separate calls.
->* 2) The loadRequests() method can pull content for both live locations & cached 
->locations in one call.
->
->I assume you’re interested in just #2… not so much #1.  Is that correct?  If we
->need to include #1 into the docs, please let me know.
 
 ## Clearing Prefetched Locations from Cache
-Suppose a special add-on offer was prefetched and cached on the booking > seating screen. A user may revisit that screen later. However, if the user decides to change the bus line during the app session, the prefetched offer should be cleared so a new offer for the new bus line can display. All prefetched locations are cleared with the **Target.clearPrefetchCache()** method.
- 
-
-
-
-
-------------
-
-LINK EXAMPLE:   *[success metric](../c-activities/r-success-metrics/success-metrics.md#reference_D011575C85DA48E989A244593D9B9924)* 
-
-
-TABLE Example:
-
-| metadata | what it does |
-|--- |--- |
-| solution-title | Used in article header as link |
-| solution-hub-url | Opens helpx hub page |
-| solution-icon | Displays solution icon next to solution title. Not yet implemented |
-| getting-started-url | Link to helpx getting started page |
-| tutorials-url | Link to video tutorials--either helpx tutorials or KT tutorials |
-| mini-toc-levels | Determines the number of heading levels that appear in right rail. default is 2 |
-| git-repo | Specifies the location of the master repo for internal use |
-
-NOTE EXAMPLE:
->[!NOTE]
->
->Adobe Delivery infrastructure is being secured to NOT support TLS 1.0 devices 
+Suppose a special add-on offer was prefetched and cached on the booking > seating screen. A user may revisit that screen later. However, if the user decides to change the bus line during the app session, the prefetched offer should be cleared so a new offer for the new bus line can display. All prefetched locations are cleared with the **Target.clearPrefetchCache()** method. 
 
