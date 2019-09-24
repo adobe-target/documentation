@@ -5,9 +5,12 @@ title: Adobe Target location request scenarios
 ---
 
 # Adobe Target Location Request Scenarios
-The Adobe Mobile Services SDK version 4 provides Adobe Target methods & functionality that enable you customize your mobile app experiences.
-
-
+The Adobe Mobile Services SDK version 4 provides Adobe Target methods & functionality that enable you customize your mobile app implementation and tailor it for different experiences.
+* **Request using a Prefetch "Blocking"**
+* **Request using a Live Location**
+* **Request Multiple Target Locations in one Call**
+* **Requests combining Prefetch & Live Locations**
+* **Clearing Prefetched Locations from Cache**
 
 #### We.Travel App
 This article discusses multiple scenarios using a sample travel app. The app has a search feature that finds available bus routes. The app will be used for demonstration purposes.

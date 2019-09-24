@@ -3,49 +3,25 @@ description: The Adobe Target SDK can be validated on your mobile app by debuggi
 seo-title: How to Validate Adobe Target for Your Mobile App
 title: How to Validate Adobe Target for your mobile app
 ---
+# Adobe Target Mobile Implementation
 
-# How to Validate Adobe Target (SDK v4) for your mobile app{#how-to-validate-Adobe-Target-for-your-mobile-app}
+This lesson will cover a comprehensive mobile Target implementation, showcasing different Target scenarios and customizations within a Demo app.  Download the We.Travel App [Here](https://github.com/Adobe-Marketing-Cloud/busbooking-mobileapps) 
 
-The Adobe Target SDK can be validated on your mobile app by using an Android Emulator & reviewing verbose logging in your Android IDE environment. This article demonstrates how to use the Android Studio IDE to debug Target server calls for the Adobe Mobile Services SDK version 4.  
-
-## Validate with an Emulator
-
-Android Studio's Android Emulator & Logcat feature can be used to validate requests & responses from the Adobe Target servers. If you're using a different IDE such as Eclipse, logging should follow a similar process. You can also import your Android app into Android Studio to use the Logcat feature.  
+The foundational step of the Adobe Target implementation, the mobile SDK, has been preinstalled within this demo app.  But before proceeding in setting up the Global mbox, let's verify the SDK implementation steps. 
 
 #### Verify the SDK Implementation
-Before debugging server requests, make sure the following steps are complete:
 
 * Download and add the [Adobe Mobile Services SDK](https://docs.adobe.com/content/help/en/mobile-services/android/getting-started-android/requirements.html) to your project
 * Add the ADBMobileConfig.json file to the assets folder in your project
 * Verify that that ADBMobileConfig.json file has the target.clientCode value set to the correct value for your implementation
 * Verify that the correct [Target Classes & Methods](https://docs.adobe.com/content/help/en/mobile-services/android/target-android/c-target-methods.html) are implemented with the correct Target location names (mboxes) 
 
-#### Debug Requests & Responses with Logcat 
-* In Android Studio, select the Logcat console (View > Tool Windows > Logcat OR select the Logcat tab @ the bottom of the screen)
-* On the Logcat filter bar, select "Verbose" and set the filter keyword to "adbmobile" (note: if the filter menu doesn't show, try setting the console to a floating window: Window > Active Tool Window > Floating Mode)
-* Run the Android Emulator and look for the Target request and response. "Response received" indicates that the server connection and response was successful:
+#### Implement Global mbox (PreFetch) 
+A prefetchContent mbox uses the Android Mobile SDKs to fetch offer content as few times as possible by caching the server responses. Creating a prefetch request with an array of mbox locations can be configured to call the Target server and retrieve content for many mbox locations at once.  All content will be retrieved and cached, and will then be retrievable from the cache by all future calls that contain cached content for the specified mbox names.  Additional mbox names can be added to this array, as appropriate, to support the increased scope and sophistication of the install. 
+Additional details - [Prefetch offer content in Android](https://docs.adobe.com/content/help/en/mobile-services/android/target-android/c-mob-target-prefetch-android.html)
 
-![](images/logcat_example.jpg)  
- 
-* Remove the "adbmobile" filter and note any connection errors. Most errors are likely caused from incorrect request syntax or configuration. Proxy settings in the Emulator settings can also cause connection errors.  
-
-#### Verify the Target Activity in the UI
-If an Activity is already created in the Target UI, the location requested in the Target SDK call (if successful) can be seen in the location drop-down menu under Activities > (Select Activity Name) > Edit Activity > Experiences:
-
-If an Activity is not yet created, create a new one:
-
-* Select Activities > Create Activity
-* Select the Activity Type (such as A/B Test)
-* Select Mobile App
-* Select "Form" as the Experience Composer
-* Select the Workspace & Property
-* The location drop-down on a selected Experience shows the locations that are registered:
-
-![](images/target_location_dropdown2.jpg) 
-
-
-#### prefetchContent() Code Example
-The Target.prefetchContent() Java method was used to prefetch & cache an mbox in the request shown above. Here is the syntax of the request:
+##### prefetchContent() Code Example
+The Target.prefetchContent() Java method was used to prefetch & cache an mbox. Here is the syntax of the request:
 
 ```
 public void targetPrefetchContent() {
@@ -72,6 +48,41 @@ public void targetPrefetchContent() {
     Target.prefetchContent(prefetchList, profileParameters, prefetchStatusCallback);
 }
 ```
+
+
+## How to Validate Adobe Target (SDK v4) for your mobile app{#how-to-validate-Adobe-Target-for-your-mobile-app}
+
+Now that the SDK is implemented and our initial prefetch mbox call has been setup, let's validate the requests & responses from the Adobe Target Servers.  The Adobe Target SDK can be validated on your mobile app by using an Android Emulator & reviewing verbose logging in your Android IDE environment. This article demonstrates how to use the Android Studio IDE to debug Target server calls for the Adobe Mobile Services SDK version 4.  
+
+### Validate with an Emulator
+
+Android Studio's Android Emulator & Logcat feature can be used to validate requests & responses from the Adobe Target servers. If you're using a different IDE such as Eclipse, logging should follow a similar process. You can also import your Android app into Android Studio to use the Logcat feature.  
+
+
+#### Debug Requests & Responses with Logcat 
+* In Android Studio, select the Logcat console (View > Tool Windows > Logcat OR select the Logcat tab @ the bottom of the screen)
+* On the Logcat filter bar, select "Verbose" and set the filter keyword to "adbmobile" (note: if the filter menu doesn't show, try setting the console to a floating window: Window > Active Tool Window > Floating Mode)
+* Run the Android Emulator and look for the Target request and response. "Response received" indicates that the server connection and response was successful:
+
+![](images/logcat_example.jpg)  
+ 
+* Remove the "adbmobile" filter and note any connection errors. Most errors are likely caused from incorrect request syntax or configuration. Proxy settings in the Emulator settings can also cause connection errors.  
+
+#### Verify the Target Activity in the UI
+If an Activity is already created in the Target UI, the location requested in the Target SDK call (if successful) can be seen in the location drop-down menu under Activities > (Select Activity Name) > Edit Activity > Experiences:
+
+If an Activity is not yet created, create a new one:
+
+* Select Activities > Create Activity
+* Select the Activity Type (such as A/B Test)
+* Select Mobile App
+* Select "Form" as the Experience Composer
+* Select the Workspace & Property
+* The location drop-down on a selected Experience shows the locations that are registered:
+
+![](images/target_location_dropdown2.jpg) 
+
+
 
 #### Response Details Example
 Here are the details of the response from the Logcat console (expanded JSON view for readability): 
