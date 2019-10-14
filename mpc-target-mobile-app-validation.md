@@ -1,8 +1,15 @@
 ---
-description: The Adobe Target SDK can be validated on your mobile app by debugging Target server calls in an Android Emulator.   
-seo-title: How to Validate Adobe Target for Your Mobile App
 title: How to Validate Adobe Target for your mobile app
+seo-title: How to Validate Adobe Target for Your Mobile App
+description: The Adobe Target SDK can be validated on your mobile app by debugging Target server calls in an Android Emulator.   
+seo-description:
+feature: mobile
+kt: kt-3040
+audience: developer
+doc-type: tutorial
+activity-type: implement
 ---
+
 # Adobe Target Mobile Implementation
 
 ## Overview
@@ -36,7 +43,7 @@ With this walkthrough, it is assumed that you have an Adobe Id and the required 
 
 It is also assumed that you are familiar with Android development in Java.  You will get more out of this walkthrough if you can comfortably read and understand code.
 
-The foundational step of the Adobe Target implementation, the mobile SDK, has been preinstalled within this demo app.  But before proceeding in setting up the Global mbox, let's verify the SDK implementation steps. 
+The foundational step of the Adobe Target implementation, the mobile SDK, has been preinstalled within this demo app.  But before proceeding in setting up the Global mbox, let's verify the SDK implementation steps.
 
 ## Verify the SDK Implementation
 
@@ -54,7 +61,7 @@ Additional details - [Prefetch offer content in Android](https://docs.adobe.com/
 ##### prefetchContent() Code 
 Here is the syntax of the Target.prefetchContent() Java request to be installed:
 
-```
+```java
 public void targetPrefetchContent() {
     List<TargetPrefetchObject> prefetchList = new ArrayList<>();
     Map<String, Object> profileParameters;
@@ -80,8 +87,7 @@ public void targetPrefetchContent() {
 }
 ```
 
-
-## How to Validate Adobe Target (SDK v4) for your mobile app{#how-to-validate-Adobe-Target-for-your-mobile-app}
+## How to Validate Adobe Target (SDK v4) for your mobile app
 
 Now that the SDK is implemented and our initial globalprefetch location call has been setup, let's validate the requests & responses from the Adobe Target Servers.  The Adobe Target SDK can be validated on your mobile app by using an Android Emulator & reviewing verbose logging in your Android IDE environment. This article demonstrates how to use the Android Studio IDE to debug Target server calls for the Adobe Mobile Services SDK version 4.  
 
@@ -89,16 +95,16 @@ Now that the SDK is implemented and our initial globalprefetch location call has
 
 Android Studio's Android Emulator & Logcat feature can be used to validate requests & responses from the Adobe Target servers. If you're using a different IDE such as Eclipse, logging should follow a similar process. Importing your own Android app into Android Studio to use the Logcat feature will allow the same validation.  
 
-#### Debug Requests & Responses with Logcat 
 * In Android Studio, select the Logcat console (View > Tool Windows > Logcat OR select the Logcat tab @ the bottom of the screen)
 * On the Logcat filter bar, select "Verbose" and set the filter keyword to "adbmobile" (note: if the filter menu doesn't show, try setting the console to a floating window: Window > Active Tool Window > Floating Mode)
 * Run the Android Emulator and look for the Target request and response. "Response received" indicates that the server connection and response was successful:
 
-![](images/logcat_example.jpg)  
- 
+    ![Finding the request in Logcat](assets/logcat_example.jpg)
+
 * Remove the "adbmobile" filter and note any connection errors. Most errors are likely caused from incorrect request syntax or configuration. Proxy settings in the Emulator settings can also cause connection errors.  
 
 #### Verify the Target Activity in the UI
+
 If an Activity is already created in the Target UI, the location requested in the Target SDK call (if successful) can be seen in the location drop-down menu under Activities > (Select Activity Name) > Edit Activity > Experiences:
 
 If no Activity has not yet created, create a new one:
@@ -110,22 +116,21 @@ If no Activity has not yet created, create a new one:
 * Select the Workspace & Property
 * The location drop-down on a selected Experience shows the locations that are registered:
 
-![](images/target_location_dropdown2.jpg) 
-
-
+    ![Locations will show in interface dropdowns in the Form Composer](assets/target_location_dropdown2.jpg)
 
 #### Response Details Example
-Here are the details of the response from the Logcat console (expanded JSON view for readability): 
 
-```
+Here are the details of the response from the Logcat console (expanded JSON view for readability):
+
+```json
 {
 "requestId":"4988228c-8430-4e33-b3ca-37ce82e3a90c",
 "client":"ecserverside",
 "id":
-	{
-	"tntId":"111568817282645-907045.28_29",
-	"marketingCloudVisitorId":"34552764763276759957814173181896264559"
-	},
+    {
+    "tntId":"111568817282645-907045.28_29",
+    "marketingCloudVisitorId":"34552764763276759957814173181896264559"
+    },
 "edgeHost":"mboxedge28.tt.omtrdc.net",
 "contentAsJson":false,
 "prefetchResponses":
@@ -143,6 +148,7 @@ Here are the details of the response from the Logcat console (expanded JSON view
 	}]
 }
 ```
+
 The main key/value pairs to validate and check for accuracy are listed below:
 
 | Key | Value |
@@ -150,22 +156,22 @@ The main key/value pairs to validate and check for accuracy are listed below:
 | client | your Adobe Target clientCode value - unique to your environment  |
 | tntId | primary identifier in Target for an individual user |
 | prefetchResponses | for prefetch requests: this object list locations (mboxes) that are prefetched and cached into device memory and any profile parameters included in the request |
-| at_property | the Target property from which mboxes (locations) are served. This value is found in the Target interface under Setup > Properties > (select the property of the offer) > (code box)
+| at_property | the Target property from which mboxes (locations) are served. This value is found in the Target interface under Setup > Properties > (select the property of the offer) > (code box) |
 | mbox | the location identifier used in Activities in Adobe Target  |
 | content | for prefetch requests:  content delivered to the specified mbox |
 
-
 #### JSON Offers: Common Errors
+
 For JSON Offers:  If the request appears to be sending properly, but continues to return default content, check all the parameters in the Target.loadRequest call. If the "targetParameters" value is empty for a JSON offer request, default content will be returned:
 
-![](images/error1.jpg)
+![Default content returned in the response](assets/error1.jpg)
 
 To correct this, make sure the at_property is defined and set in the loadRequest. This ensures the offer is being served from the correct Target property.
 
-![](images/mboxparam1.jpg)
+![Make sure the at_property parameter is defined if using workspaces](assets/mboxparam1.jpg)
 
 The correct Target property is found in the target property is found in the Target interface under Setup > Properties > select the property of the offer.
 
-
 #### JSON Offer Conversion
+
 The Target.loadRequest method returns an offer in String format. If you're displaying a JSON offer, it needs to be converted from String to JSON after a response is returned in order to parse or reference items within the JSON object.
