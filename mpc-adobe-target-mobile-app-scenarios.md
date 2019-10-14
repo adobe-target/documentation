@@ -12,9 +12,8 @@ activity-type: implement
 
 # Adobe Target Location Request Scenarios
 
-The Adobe Mobile Services SDK version 4 provides Adobe Target methods & functionality that enable you customize your mobile app implementation and tailor it for different experiences.
-
-* **Request using a Prefetch "Blocking"**
+The Adobe Mobile Services SDK (v4) provides Adobe Target methods & functionality that enable you customize your mobile app implementation and tailor it for different experiences.
+* **Use a Prefetch "Blocking" Location Call**
 * **Request using a Live Location**
 * **Request Multiple Target Locations in one Call**
 * **Requests combining Prefetch & Live Locations**
@@ -25,10 +24,11 @@ The Adobe Mobile Services SDK version 4 provides Adobe Target methods & function
 This article discusses multiple scenarios using a sample travel app. The app has a search feature that finds available bus routes. The app will be used for demonstration purposes.
 
 * Target locations are prefetched on the home screen, so no Target content appears, but locations are cached in the device behind the scene
-* The search results screen loads a Target location and displays banners based off a JSON offer loaded from the Target server.
-![We.Travel app with Target serving a banner](assets/travel_app2.jpg)
 
-## Use a Prefetch "Blocking" Request
+* The search results screen loads a Target location and displays banners based off a JSON offer loaded from the Target server. 
+![](images/travel_app2.jpg)
+ 
+## Use a Prefetch "Blocking" Location Call
 
 Configuring Target methods as prefetch "blocking" requests provides two main benefits:
 
@@ -62,10 +62,10 @@ public void targetPrefetchContent() {
     Map<String, Object> profileParameters;
     profileParameters = new HashMap<String, Object>();
     profileParameters.put("ProfileParam18Sep", "1");
-    Map<String, Object> mboxParameters1 = new HashMap<String, Object>();
-    mboxParameters1.put("MboxParam18Sep", "1");
-    mboxParameters1.put("at_property", "7962ac68-17db-1579-408f-9556feccb477");
-    prefetchList.add(Target.createTargetPrefetchObject("mboxTest3", mboxParameters1));
+    Map<String, Object> travelParameters1 = new HashMap<String, Object>();
+    travelParameters1.put("travelParam18Sep", "1");
+    travelParameters1.put("at_property", "7962ac68-17db-1579-408f-9556feccb477");
+    prefetchList.add(Target.createTargetPrefetchObject("travelTest3", travelParameters1));
     Target.TargetCallback<Boolean> prefetchStatusCallback = new Target.TargetCallback<Boolean>() {
         @Override
         public void call(final Boolean status) {
@@ -96,13 +96,13 @@ This demo uses JSON offers to determine which banners to display. In the Target 
 
 A live location request is called with the **Target.loadRequest()** method. This request below calls the JSON offer, retrieves an ID element from the JSON object, and uses that ID to determine the right assets to display.
 
-```java
-// SINGLE MBOX SCENARIO - JSON OFFER
+```
+// SINGLE Location SCENARIO - JSON OFFER
 public void targetLoadRequest() {
     Map<String, Object> mboxParam;
     mboxParam = new HashMap<String, Object>();
     mboxParam.put("at_property", "7962ac68-17db-1579-408f-9556feccb477");
-    Target.loadRequest("mboxTest3", "----default_mbox----", null, null, mboxParam, new Target.TargetCallback<String>() {
+    Target.loadRequest("travelTest3", "----default_mbox----", null, null, mboxParam, new Target.TargetCallback<String>() {
         @Override
         public void call(final String s) {
             SearchBusActivity.this.runOnUiThread(new Runnable() {
