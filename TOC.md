@@ -7,9 +7,8 @@ audience: end-user
 # Adobe Target Mobile v4 Tutorial {#mobile-sdk-v4}
 
 + [Overview](overview.md)
-+ [Download and Validate the Sample App](download-validate-and-update-the-sample-app.md)
-+ [Add mBoxes : Prefetched Content](add-requests-prefetch.md)
-+ [Add mBoxes : Real-time Content](add-requests-real-time.md)
++ [Download and Update the Sample App](download-and-update-the-sample-app.md)
++ [Add Requests](add-requests.md)
 + [Add Parameters](add-parameters.md)
 + [Personalize Layouts](personalize-layouts.md)
 + [Personalize with Geolocation](personalize-with-geolocation.md)
