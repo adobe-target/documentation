@@ -231,7 +231,7 @@ There may be situations where prefetched offers need to be cleared during a sess
 
 For this example, we'll just clear prefetched offers for the session when a booking takes place. This is done by calling the Target.clearPrefetchCache() function. Set the function inside the targetLoadRequest() function as shown below:
 
-![Clear Prefetched Offers from Cache](assets/clearprefetch.jpg)
+![Clear Prefetched Offers from Cache](assets/clearPrefetch.jpg)
 
 Congratulations! Your app now has the framework for personalization. In the next lesson, you'll be adding parameters to these offers. This will enhance the offers and provide more data-driven insights.
 
