@@ -56,4 +56,4 @@ In these lessons, you will implement the Adobe Target into a demo app called "We
 
 Let's get started!
 
-[Next "Download, Validate, and Update the Sample App" >](download-validate-and-update-the-sample-app.md)
+[Next "Download, Validate, and Update the Sample App" >](download-and-update-the-sample-app.md)
