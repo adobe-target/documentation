@@ -52,8 +52,18 @@ Also, it is assumed that you are familiar with Android development in Java. You 
 
 In these lessons, you will implement the Adobe Target into a demo app called "We.Travel" using your own Adobe Target account. The App has capabilities that will allow you to implement a variety of Adobe Target scenarios before you do so in your own app.
 
-![We.Travel app](assets/weTravel.png)
+![We.Travel app](assets/travel_app.jpg)
+
+After walking through implementation within the We.Travel app you will use a simple 5 Step process to guide your own app implementation requirement process.
+
+![5Steps](assets/5Steps.jpg)
+
+* Prepare your App & Configure the SDK settings
+* Implement Locations within your app
+* Validate Implemented Locations
+* Configure a Mobile Activity in Adobe Target
+* Validate the new Activity Experience within the App
 
 Let's get started!
 
-[Next "Download, Validate, and Update the Sample App" >](download-and-update-the-sample-app.md)
+[Next "Download and Update the Sample App" >](download-and-update-the-sample-app.md)
