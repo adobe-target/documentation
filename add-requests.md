@@ -28,7 +28,7 @@ At the end of this lesson, you will be able to:
 * **Clear Prefetched Locations from Cache**
 * **Validate Prefetched Locations & Live Locations in Android Studio**
 
-### Terminology
+## Terminology
 
 Below is some of key Target terminology that we will be using in this tutorial.
 
