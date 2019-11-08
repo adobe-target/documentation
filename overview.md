@@ -1,8 +1,6 @@
 ---
 title: Adobe Target location request scenarios
-seo-title: Adobe Target location request scenarios
 description: Adobe Target mobile SDK methods can be used to display Target locations in several scenarios.
-seo-description:
 feature: mobile
 kt: kt-3040
 audience: developer
@@ -54,16 +52,10 @@ In these lessons, you will implement the Adobe Target into a demo app called "We
 
 ![We.Travel app](assets/travel_app.jpg)
 
-After walking through implementation within the We.Travel app you will use a simple 5 Step process to guide your own app implementation requirement process.
+After walking through implementation within the We.Travel app you will use a simple five-step process to guide your own app implementation requirement process.
 
-![5Steps](assets/5Steps.jpg)
-
-* Prepare your App & Configure the SDK settings
-* Implement Locations within your app
-* Validate Implemented Locations
-* Configure a Mobile Activity in Adobe Target
-* Validate the new Activity Experience within the App
+![Prepare your App & Configure the SDK settings, Implement Requests within your app, Validate Implemented Requests, Configure a Mobile Activity in Adobe Target, Validate the new Activity Experience within the App](assets/5Steps.jpg)
 
 Let's get started!
 
-[Next "Download and Update the Sample App" >](download-and-update-the-sample-app.md)
+[NEXT :  "Download and Update the Sample App" >](download-and-update-the-sample-app.md)
