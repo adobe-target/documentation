@@ -10,7 +10,7 @@ activity-type: implement
 
 # Create Audience Segments in Adobe Target
 
-In this lesson, we'll build audiences, offers, and activities in Adobe Target for the three locations we implemented in the previous lessons.
+In this lesson, we'll build audiences and offers in Adobe Target for the three locations we implemented in the previous lessons.
 
 ## Learning Objectives
 
