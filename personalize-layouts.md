@@ -12,9 +12,22 @@ activity-type: implement
 
 # Personalize Layouts
 
+## Learning Objectives
+
+At the end of this lesson, you will be able to:
+
+* **objective 1**
+* **objective 2**
+
+## Create Activities
+
+## Loading Location Placeholders
+
+In the previous lessons, we built a prefetch request to cache two locations (wetravel_engage_home & wetravel_engage_search. Now we'll load the two locations to act as placeholders for our future offers so the offers can be displayed on the screen. The first location will load on the home screen and the second will load on the Search Results screen.
+
 ## Load the First Location on the Home Screen
 
-The first Location will be displayed on the home screen. In the HomeActivity file, we'll add the code shown in red:
+ The first location (wetravel_engage_home) will be displayed on the home screen. Before adding an offer here, let's load the location to the screen and validate it.
 
 ![Load the First Location on the Home Screen](assets/home_offer.jpg)
 
@@ -38,19 +51,24 @@ public void engageMessage() {
 }
 ```
 
-### engageMessage() Code Explanation
+### Code Explanation
 
 | Code | Description |
 |--- |--- |
-| engageMessage() | This function fires Target.loadRequest() which loads the wetravel\_engage\_home Location |
+| engageMessage() | This function fires Target.loadRequest() which loads the wetravel\_engage\_home location |
+Notice that no parameters are needed for the prefetch request or load request. This is because the data that we'll use later for our audience segments is provided by the lifecycle metrics.
 
 ## Validate the First Location
 
-Now let's make sure the Location is loading correctly. Open the Android Emulator, then open Logcat & filter for "engage". Watch the logs for the response. It should read "Default content was returned for "wetravel_engage_home":
+Now let's make sure the Location is loading correctly. Open the emulator and load the home screen. The offer you created in the previous lesson should appear as a notification at the bottom of the screen.
+
+You can also open logcat and filter for "engage" to see how the response looks. It should read "Default content was returned for "wetravel_engage_home":
 
 ![Validate the Home Screen Location](assets/home_offer_validation.jpg)
 
 If you are not seeing a successful response, verify settings in the ADBMobileConfig.json file and code syntax in the HomeActivity file.
+
+Once you've finished validating, the wetravel_engage_home location is now ready to display an offer.
 
 ## Load the Second Location on the Search Results Screen
 
@@ -84,7 +102,9 @@ public void engageMessage() {
 }
 ```
 
-## Validate the Second Location
+Notice that no extra parameters are used for this load request. The lifecycle metrics will provide the data we need for audience segments in Target (covered in the next lesson).
+
+# Validate the Second Location
 
 With the Emulator, select a departure & destination on the Home Screen and tap "Find Bus". Watch Logcat for the Target response when the Search Results Screen renders:
 
@@ -93,3 +113,7 @@ With the Emulator, select a departure & destination on the Home Screen and tap "
 * The "wetravel\_engage\_search" response should read "Default content was returned for "wetravel\_engage\_search" (default content is returned since this is the first request to the server & there is no offer content configured yet).
 
 If you are not seeing success responses, verify settings in the ADBMobileConfig.json file and code syntax in the SearchBusActivity file.
+
+Once you've finished validating, the wetravel_engage_search location is now ready to display an offer.
+
+# Validate the Third Location
