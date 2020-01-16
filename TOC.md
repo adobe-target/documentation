@@ -10,6 +10,6 @@ audience: end-user
 + [Download and Update the Sample App](download-and-update-the-sample-app.md)
 + [Add Requests](add-requests.md)
 + [Add Parameters](add-parameters.md)
-+ [Create Segments and Offers](create-segments-and-offers.md)
++ [Create Audiences and Offers](create-audiences-and-offers.md)
 + [Personalize Layouts](personalize-layouts.md)
 + [Feature Flagging](feature-flagging.md)

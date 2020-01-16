@@ -1,6 +1,8 @@
 ---
-title: Adobe Target location request scenarios
-description: Adobe Target mobile SDK methods can be used to display Target locations in several scenarios.
+title: Add Adobe Target Requests
+seo-title: Add Adobe Target Requests
+description: The Adobe Mobile Services SDK (v4) provides Adobe Target methods & functionality that enable you to personalize your app with different experiences for different users.   
+seo-description: The Adobe Mobile Services SDK (v4) provides Adobe Target methods & functionality that enable you to personalize your app with different experiences for different users.
 feature: mobile
 kt: kt-3040
 audience: developer
@@ -170,4 +172,4 @@ For this example, we'll just clear prefetched locations for the session when a b
 
 Congratulations! Your app now has the framework for personalization. In the next lesson, you'll be adding parameters to these locations. This will enhance the locations and provide more data-driven insights to optimize the app.
 
-[NEXT : "Add Parameters" >](add-parameters.md)
+**[NEXT : "Add Parameters" >](add-parameters.md)**
