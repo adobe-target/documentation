@@ -30,6 +30,17 @@ The Config.collectLifecycleData request found in the onResume() function enables
 To enable lifecycle metrics & parameters, make sure the Config.collectLifecycleData is added to the onResume() function in your HomeActivity:
 ![Lifecycle Request](assets/lifecycle_code.jpg)
 
+Here is the updated code:
+
+```java
+@Override
+protected void onResume() {
+    super.onResume();
+    Config.collectLifecycleData(this);
+    targetPrefetchContent();
+}
+```
+
 ### Validate the Lifecycle Parameters for the Prefetch Request
 
 Run the Emulator and use Logcat to validate the lifecycle parameters. Filter for "prefetch" to find the prefetch response and look for the new parameters:
@@ -72,27 +83,6 @@ public void targetPrefetchContent() {
             }};
         Target.prefetchContent(prefetchList, null, prefetchStatusCallback);
     }
-```
-
-### Note About Parameters
-
-<!--Show in general how to add other parameters (locationParams & profileParams) -->
-For future projects, you may want to implement additional parameters. The createTargetPrefetchObject() method allows three types of parameters: locationParams, orderParams, and productParams. Here is the syntax for the createTargetPrefetchObject() method:
-
-```java
-public static TargetPrefetchObject createTargetPrefetchObject(
-final String locationName,
-final Map<String, Object> locationParams)
-final Map<String, Object> orderParams,
-final Map<String, Object> productParams)
-```
-
-Also note that different location parameters can be added to each location in the prefetch request. For example, you could create another Map called param2, put a new parameter in it, then set param2 in one location and param1 with the other location in the createTargetPrefetchObject function. Here's an example:
-
-```java
-public static TargetPrefetchObject createTargetPrefetchObject(
-prefetchList.add(Target.createTargetPrefetchObject(location1_name, params1);
-prefetchList.add(Target.createTargetPrefetchObject(location2_name, params2);
 ```
 
 ## Validate the at_property Parameter in the Prefetch Request
@@ -139,27 +129,9 @@ public void targetLoadRequest(final ArrayList<Recommandation> recommandations) {
 Run the emulator and open Logcat. Filter for one of the parameters to verify that the request contains the needed parameters:
 ![Validate the Custom Parameters in the Live Location Request](assets/parameters_live_location_validation.jpg)
 
-## About Order Confirmation Parameters
+## Using Additional Parameters
 
-Although not used in this demo project, order details will need to be tracked in a live app so Target can use order details as metrics/dimensions. To add order parameters (along with location & profile parameters), use this syntax with the Target.loadRequest() method:
-
-```java
-Map<String, Object> profileParams = new HashMap<String, Object>();
-profileParams.put(“profile-parameter-key”, “profile-parameter-value”);
-
-Map<String, Object> orderParams = new HashMap<String, Object>();
-orderParams.put(“order-parameter-key”, “order-parameter-value”);
-
-Map<String, Object> locationParams = new HashMap<String, Object>();
-locationParams.put(“mbox-parameter-key”, “mbox-parameter-value”);
-
-Target.loadRequest(“locationName”, “defaultContent”, profileParams, orderParams, locationParams, new TargetCallback<String>() {
-    @Override
-    public void call (String item) {
-       Log.d(“Target Content”, item);
-    }
-});
-```
+Although not used in this demo project, order details will need to be tracked in a live app so Target can use order details as metrics/dimensions. This can be done by using order parameters. Also, for future projects, you may wish to use additional profile parameters and location parameters. Adobe Target Methods and parameters for Android are explained more here: [Android SDK 4.x Target Methods](https://marketing-beta.adobe.com/resources/help/mobile/android/c_target_methods.html).
 
 ## About Analytics for Target (A4T)
 

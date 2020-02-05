@@ -34,43 +34,59 @@ Here is a summary of the activity we'll build:
 
 In the Target interface select the following:
 
-* Activities > Create Activity > Experience Targeting Activity
-* Select Mobile App
-* Select your Workspace and Property Name
+(1) Select "Activities"
+(2) Select "Create Activity"
+(3) Select "Experience Targeting"
 
-![Create Activity](assets/activity_create.jpg)
+![Create Activity](assets/activity_create_1.jpg)
+
+(4) Select "Mobile App"
+(5) Select the Form composer
+(6) Select your workspace (the same workspace you used in previous lessons)
+(7) Select your property
+(8) Select Next
+
+![Create Activity](assets/activity_create_2.jpg)
 
 On the next screen, we'll add our first "Engage Users" experience:
 
-* Change the title to "Engage Users"
-* Select the ellipsis > Change Audience
+(9) Change the title to "Engage Users"
+(10) Select the ellipsis > Change Audience
 
-![Experience A](assets/activity_engage_users_a.jpg)
+![Experience A Change Audience](assets/activity_create_3.jpg)
 
-* Set the audience to "New Mobile App Users"
+(11) Set the audience to "New Mobile App Users"
+(12) Select "Done"
 
-![Experience A Audience](assets/activity_engage_users_a_audience.jpg)
+![Experience A Audience](assets/activity_create_4.jpg)
 
-* Now set the first offer for the first location
-* Select the wetravel_engage_home location
-* Change the HTML Offer
+Now set the first offer for the first location:
 
-![Experience A Offer](assets/activity_engage_users_a_offer.jpg)
+(13) Change the location to "wetravel_engage_home"
+(14) Select the dropdown arrow next to Default Content and select "Change HTML Offer"
 
-* Select the "Home_Engage_New_Users" offer
+![Experience A Audience](assets/activity_create_5.jpg)
 
-![Experience A HTML Offer](assets/activity_engage_users_a_html_offer.jpg)
+(15) Select the "Home : Engage New Users" offer
+(16) Select "Done"
 
-Now add the second offer for this same activity:
+![Experience A Audience](assets/activity_create_6.jpg)
 
-* Select the "wetravel_engage_search" location
-* Change the HTML offer
+Now add the Search Screen offer on this same activity:
 
-![Experience A Offer 2](assets/activity_engage_users_a_offer2.jpg)
+(17) Select "Add Location"
 
-* Select the "Search : Engage_New_Users" HTML offer:
+![Experience B Audience](assets/activity_create_7.jpg)
 
-![Experience A HTML Offer 2](assets/activity_engage_users_a_html_offer2.jpg)
+(18) Select the "wetravel_engage_search" location
+(19) Change the HTML offer
+
+![Experience B Audience](assets/activity_create_8.jpg)
+
+(20) Select the "Search : Engage New Users" offer
+(21) Select "Done"
+
+![Experience B Audience](assets/activity_create_9.jpg)
 
 The configuration for the "New Mobile App Users" experience (Experience A) should now look like this:
 
@@ -80,30 +96,41 @@ The configuration for the "New Mobile App Users" experience (Experience A) shoul
 
 Now create an experience for "Returning Mobile App Users" (Experience B).
 
-* Select "Add Experience Targeting" on the left
-* Select the Audience "Returning Mobile App Users (after 30+ days)"
-* Use the same process for Experience A to configure Experience B
+(1) Select "Add Experience Targeting" on the left
 
-The configuration for the "Returning Mobile App Users" experience (Experience B) should now look like this:
+![Experience B Audience](assets/activity_create_10.jpg)
+
+(2) Select the Audience "Returning Mobile App Users (after 30+ days)"
+(3) Select "Done"
+
+![Experience B Audience](assets/activity_create_11.jpg)
+
+Now use the same process for Experience A to configure Experience B. The configuration for the "Returning Mobile App Users" experience (Experience B) should now look like this:
 
 #### Experience B Configuration
 
 ![Experience B Final](assets/activity_engage_users_b_final.jpg)
 
-* Select "Next"
-* Use the default settings for Targeting
+Select "Next" to advance to "Targeting":
+
+#### Targeting
+
+Use the defaults on this page
+Select "Next" to advance to "Goals & Settings"
 
 ![Engage Users Activity - Targeting Default](assets/activity_engage_users_targeting.jpg)
 
-* Select "Next" to advance to "Goals & Settings"
-* Set the Primary Goal to "Conversion"
-* Set the action to "Viewed an mbox" > "any mbox"
+#### Goals & Settings
 
-![Engage Users Activity - Goals](assets/activity_engage_users_goals.jpg)
+(1) Under the Reporting Settings, set the Primary Goal to "Conversion"
+(2) Set the action to "Viewed an mbox" > "any mbox"
+(2) Select "Save & Close"
 
-* Keep all other settings on the screen to the defaults
-* Save & Close the Activity
-* Activate the Activity on the next screen
+![Experience B Audience](assets/activity_create_12.jpg)
+
+Now activate the Activity on the next screen
+
+![Experience B Audience](assets/activity_create_13.jpg)
 
 Our first activity is now live and ready to test!
 
@@ -116,7 +143,7 @@ Here is a summary of the second activity we'll build:
 | Destination: San Diego | wetravel_context_dest | Recommendation_for_San_Diego |
 | Destination: Los Angeles | wetravel_context_dest | Recommendation_for_Los_Angeles |
 
-Repeat the same process as above for the next Activity - "Contextual Offers". The Final configuration for both experiences are shown below:
+Repeat the same process as above for the next Activity. Name the Activity "Contextual Offers". The Final configuration for both experiences are shown below:
 
 ### Experience A
 
@@ -126,7 +153,19 @@ Repeat the same process as above for the next Activity - "Contextual Offers". Th
 
 ![Contextual Offers - Experience B](assets/activity_contextual_b_final.jpg)
 
-Use the same configurations we used in the first activity for the Targeting and Goals & Settings steps. Activate the activity.
+Use the defaults for the Targeting step.
+
+#### Goals and Settings
+
+On the Goals & Settings step, we'll change the Primary Goal to the location on booking confirmation screen:
+
+(1) Under the Reporting Settings, set the Primary Goal to "Conversion"
+(2) Set the action to "Viewed an mbox" > "any mbox"
+(3) Select "Save & Close"
+
+![Contextual Offers - Experience](assets/activity_create_14.jpg)
+
+Activate the Activity on the next screen.
 
 Now our second activity is live and ready to test!
 

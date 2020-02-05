@@ -21,17 +21,17 @@ At the end of this lesson, you will be able to:
 * **Create Audiences in Adobe Target**
 * **Create Offers in Adobe Target for Each Location in your App**
 
-## Verify Access to Adobe Target
-
 This lesson will require access to Adobe Target. Before moving on through the next steps, ensure you have access to Adobe Target, which is accessed through the Adobe Experience Cloud here: [https://experience.adobe.com/](https://experience.adobe.com/). Contact your Adobe Administrator for access.
 
-Select Adobe Target and you'll be logged in to the Target UI where you can create Audiences and Offers for this lesson:
+Select Adobe Target and you'll be logged in to the Target UI where you can create Audiences and Offers for this lesson. First, make sure that the correct Workspace is selected. A workspace is used to separate Target projects into groups so that projects can be categorized or separated for different users. Select the Workspace that you used in the previous lesson to copy the at_property value:
 
-![Adobe UI](assets/target_ui.jpg)
+![Workspace Example](assets/workspace.jpg)
 
 ## Create Audiences for New and Returning Users
 
-Messages for the first 2 locations will be displayed in the app as follows:
+Adobe Target Audiences are used to identify specific groups of visitors. Offers can then be targeted to those specific groups. For the first two locations, we'll use a "New Users" audience and a "Returning Users (after 30+ days)" audience.
+
+Messages for the first two locations will be displayed in the app as follows:
 
 | Audience | Location | Message |
 | --- | --- | --- |
@@ -40,14 +40,38 @@ Messages for the first 2 locations will be displayed in the app as follows:
 | Returning Users (after 30+ days) | wetravel_engage_home | "Welcome back! Use promo code BACK30 during checkout to get a 10% discount." |
 | Returning Users (after 30+ days) | wetravel_engage_search | default content |
 
-The "wetravel_engage_home" and "wetravel_engage_search" locations are located on the home and search results screens. They will be used to help engage users to search for bus trips. We'll need audience segments built that target new and returning users so we can display relevant messages to users. Let's use the lifecycle metric "a.DaysSinceFirstUse" to build those audiences. In Adobe Target, select Audiences > Create Audience and add a rule for new users:
+The "wetravel_engage_home" and "wetravel_engage_search" locations are located on the home and search results screens. They will be used to help engage users to search for bus trips. We'll need audience segments built that target new and returning users so we can display relevant messages to users. Let's use the lifecycle metric "a.DaysSinceFirstUse" to build those audiences. 
 
 >**Note about Lifecycle metrics:**
 >All Lifecycle metrics and dimensions collected in the Target mobile SDK are prepended with "a" (a.DaysSinceFirstUse, a.DaySinceLastUse, etc.). These variables are available to use in Audiences.
 
-![Create a New User Audience](assets/audience_new_mobile_app_users.jpg)
+### Create the New Users Audience
 
-Now create an audience for users who return after 30+ days:
+(1) Select Audiences
+(2) Select Create Audience
+
+![Create a New User Audience](assets/audience_new_mobile_app_users_1.jpg)
+
+(3) Enter "New Mobile App Users" as the audience name
+(4) Select "Add Rule"
+(5) Select a "Custom" rule
+
+![Create a New User Audience](assets/audience_new_mobile_app_users_2.jpg)
+
+(6) Select a.DaysSinceFirstUse
+(7) Select "is less than"
+(8) Enter "2"
+(9) Save the new audience
+
+![Create a New User Audience](assets/audience_new_mobile_app_users_3.jpg)
+
+### Create the Returning Users Audience
+
+Follow the same steps listed above to create an audience for users who return after 30+ days.
+
+(1) Name the audience "Returning Mobile App Users (after 30+ days)
+(2) Use "a.DaysSinceLastUse is greater than 30" as the custom rule
+(3) Save the new audience
 
 ![Create a Returning User Audience](assets/audience_returning_mobile_app_users.jpg)
 
@@ -55,19 +79,43 @@ Now create an audience for users who return after 30+ days:
 
 We'll create HTML offers to display these messages. As a reminder, offers are snippets of code/content, defined in the Target user interface (or with API), which are delivered in the Target response. In mobile apps, JSON offers are common. For this demo, we'll be using HTML offers, which display in plain text in the app.
 
+### Create the Home Screen New Users Offer
+
 First, let's create offers for the messages to New Users. In the Target interface, select Offers > Create HTML Offer:
 
-![Create Offer](assets/create_offers.jpg)
+(1) Select Offers
+(2) Select Create
+(3) Select "HTML Offer"
 
-Now add each offer:
+![Create Home Offer](assets/offer_home_1.jpg)
 
-![Create "new users" offer for home screen](assets/offer_home.jpg)
+(4) Name the offer "Home : Engage New Users"
+(5) Enter "Select Source and Destination to search for available buses" as the HTML code
+(6) Save the new offer
 
-![Create "new users" offer for search screen](assets/offer_search.jpg)
+![Create Home HTML Offer](assets/offer_home_2.jpg)
 
-Now let's create the one offer for returning users (the second offer will be default content, which will display as nothing):
+### Create the Search Screen New Users Offer
 
-![Create "returning users" offer for home screen](assets/offer_returning_users.jpg)
+Repeat the steps above to create a new HTML offer for the Search screen:
+
+(1) Name the offer "Search : Engage New Users"
+(2) Enter "Use filters to narrow down your search results" as the HTML code
+(3) Save the new offer
+
+![Create Home HTML Offer](assets/offer_search.jpg)
+
+### Create the Home Screen Returning Users Offer
+
+Now let's create the Home HTML offer for Returning Users:
+
+(1) Name the offer "Home : Returning Users"
+(2) Enter "Welcome back! Use promo code BACK30 during checkout to get a 10% discount." as the HTML code
+(3) Save the new offer
+
+![Create Home HTML Offer](assets/offer_home_returning_users.jpg)
+
+The Search Screen offer for Returning Users will return default content (which is set to nothing), so there is no need to create an offer for Returning Users for the Search Screen.
 
 ## Create Audiences for Users That Book Specific Destinations
 
@@ -80,17 +128,41 @@ For this demo app, we'll focus on displaying offers for two trip destinations - 
 
 When the "Universal" value is returned to the app, a banner for Universal Studios will display. When "DJ" is returned, a banner for "Rock Night with DJ SAM" will display. The idea is to display relevant recommendations based on destination after a booking. Let's first create two custom audiences in the Target interface:
 
+### Create the "Destination : San Diego" Audience
+
+(1) Name the audience "Destination : San Diego"
+(2) Use a custom rule with this definition: "locationDest contains San Diego"
+(3) Save the new audience
+
 ![Create "San Diego" Audience](assets/audience_locationDest_san_diego.jpg)
+
+### Create the "Destination : Los Angeles" Audience
+
+(1) Name the audience "Destination : Los Angeles"
+(2) Use a custom rule with this definition: "locationDest contains Los Angeles"
+(3) Save the new audience
 
 ![Create "Los Angeles" Audience](assets/audience_locationDest_los_angeles.jpg)
 
-## Create Offers for Destination Recommendations
+## Create Offers for Destination Promotions
 
-Now we'll create HTML offers for these messages. In the Target UI, create two offers:
+Now we'll create HTML offers for these messages.
+
+### Create the San Diego Offer
+
+(1) Name the offer "Promotion for San Diego"
+(2) Enter "DJ" as the HTML code
+(3) Save the new offer
 
 ![Create "San Diego" Offer](assets/offer_san_diego.jpg)
 
-![Create "San Diego" Offer](assets/offer_los_angeles.jpg)
+### Create the Los Angeles Offer
+
+(1) Name the offer "Promotion for Los Angeles"
+(2) Enter "Universal" as the HTML code
+(3) Save the new offer
+
+![Create "Los Angeles" Offer](assets/offer_los_angeles.jpg)
 
 >Note: Our demo app contains custom logic that captures the destination value from the user's input. The logic then checks that value against the Target response and determines which banner to display. You may need to use similar logic in your own app in specific user scenarios.
 
