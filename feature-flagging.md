@@ -113,35 +113,34 @@ Let's name it "Feature Flag v1" with the value {"enable":1}
 
 ## Create an Activity
 
-Now let's create an A/B activity with that offer. For detailed steps on creating an activity see the previous lesson. The activity will only need one audience for this example. In a live scenario, you may want to build out specific custom audiences for specific feature roll-outs, then set the activity to use those audiences. In this example, we'll just allocate to a percentage of all users. Here is the configuration for the activity:
+Now let's create an A/B activity with that offer. For detailed steps on creating an activity see the previous lesson. The activity will only need one audience for this example. In a live scenario, you may want to build out specific custom audiences for specific feature roll-outs, then set the activity to use those audiences. In this example, we'll just allocate traffic 50/50 (50% to visitors who would see the feature updates, and 50% to visitors who would see a standard experience). Here is the configuration for the activity:
 
 (1) Name the Activity to "Feature Flag"
 (2) Select the "wetravel_feature_flag_recs" location
 (3) Change the content to the "Feature Flag v1" JSON offer
-(4) Select "Next" to advance to Targeting
 
 ![Feature Flag Activity Config](assets/feature_flag_activity.jpg)
 
 Create a second experience that uses the default content
 
-(5) Select "Add Experience" to add experience B
-(6) Select the "wetravel_feature_flag_recs" location
-(7) Leave "Default Content" for the content
-(8) Select "Next" to advance to Targeting
+(4) Select "Add Experience" to add experience B
+(5) Select the "wetravel_feature_flag_recs" location
+(6) Leave "Default Content" for the content
+(7) Select "Next" to advance to Targeting
 
 ![Feature Flag Activity Config](assets/feature_flag_activity_2.jpg)
 
-On the Targeting screen, verify that the Traffic Allocation method is set to "Auto-allocate to best experience" setting.
+On the Targeting screen, verify that the Traffic Allocation method is set to the default setting (Manual) and that each experience has the default 50% allocation.
 
-(9) Select "Next" to advance to "Goals & Settings"
+(8) Select "Next" to advance to "Goals & Settings"
 
 ![Feature Flag Activity Config](assets/feature_flag_activity_3.jpg)
 
 On the Goals & Settings screen, set the Primary Goal under Reporting Settings:
 
-(10) Set the Primary Goal to Conversion
-(11) Set the action to "Viewed an Mbox". We'll use the "wetravel_context_dest" location.
-(12) Select "Save & Close"
+(9) Set the Primary Goal to Conversion
+(10) Set the action to "Viewed an Mbox". We'll use the "wetravel_context_dest" location.
+(11) Select "Save & Close"
 
 ![Feature Flag Activity Config](assets/feature_flag_activity_4.jpg)
 

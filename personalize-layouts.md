@@ -29,8 +29,8 @@ Here is a summary of the activity we'll build:
 
 | Audience | Locations | Offers |
 |---|---|---|
-| New Mobile App Users | wetravel_engage_home, wetravel_engage_search | Home_Engage_New_Users, Search_Engage_New_Users |
-| Returning Users (after 30+ days) | wetravel_engage_home, wetravel_engage_search | Home_Returning Users, default_content |
+| New Mobile App Users | wetravel_engage_home, wetravel_engage_search | Home : Engage New Users, Search : Engage New Users |
+| Returning Users | wetravel_engage_home, wetravel_engage_search | Home : Returning Users, default content |
 
 In the Target interface select the following:
 
@@ -100,7 +100,7 @@ Now create an experience for "Returning Mobile App Users" (Experience B).
 
 ![Experience B Audience](assets/activity_create_10.jpg)
 
-(2) Select the Audience "Returning Mobile App Users (after 30+ days)"
+(2) Select the Audience "Returning Mobile App Users"
 (3) Select "Done"
 
 ![Experience B Audience](assets/activity_create_11.jpg)
@@ -123,7 +123,7 @@ Select "Next" to advance to "Goals & Settings"
 #### Goals & Settings
 
 (1) Under the Reporting Settings, set the Primary Goal to "Conversion"
-(2) Set the action to "Viewed an mbox" > "any mbox"
+(2) Set the action to "Viewed an mbox" > "wetravel_context_dest" (the location on the purchase confirmation screen)
 (2) Select "Save & Close"
 
 ![Experience B Audience](assets/activity_create_12.jpg)
@@ -140,8 +140,8 @@ Here is a summary of the second activity we'll build:
 
 | Audience | Location | Offers |
 | --- | --- | --- |
-| Destination: San Diego | wetravel_context_dest | Recommendation_for_San_Diego |
-| Destination: Los Angeles | wetravel_context_dest | Recommendation_for_Los_Angeles |
+| Destination: San Diego | wetravel_context_dest | Promotion for San Diego |
+| Destination: Los Angeles | wetravel_context_dest | Promotion for Los Angeles |
 
 Repeat the same process as above for the next Activity. Name the Activity "Contextual Offers". The Final configuration for both experiences are shown below:
 
@@ -171,11 +171,11 @@ Now our second activity is live and ready to test!
 
 ## Validate the Home Offer
 
-Run the Emulator and watch for the first offer to display at the bottom of the home screen. If you're a returning user after 30 days of inactivity, you would see the "welcome back" offer displayed. Since you're likely a new user (less than 2 days of use), you should see the "new user" message:
+Run the Emulator and watch for the first offer to display at the bottom of the home screen. If you're a returning user after 5 or more app launches, you would see the "welcome back" offer displayed. If you're a new user (less than 5 app launches), you should see the "new user" message:
 
 ![Validate Home Offer](assets/layout_home_validate.jpg)
 
-If the message doesn't display, try wiping the data for your emulator. This is done under Tools > AVD Manager:
+If the new user offer doesn't display, try wiping the data for your emulator. This is done under Tools > AVD Manager. That will reset the app launches to 1 the next time you launch.
 
 ![Wipe Emulator](assets/layout_home_validate_avd_wipe.jpg)
 
@@ -185,7 +185,7 @@ You can also validate the response in Logcat by filtering for "wetravel_engage_h
 
 ## Validate the Search Offer
 
-Select San Diego as your destination and search for available buses. On the results screen, you should see the "use filters" message. If you're a returning user after 30 days of inactivity, no message will appear here since default content is set for this location (which is blank):
+Select San Diego as your destination and search for available buses. On the results screen, you should see the "use filters" message. If you're a returning user after 5 or more app launches, no message will appear here since default content is set for this location (which is blank):
 
 ![Validate Search Offer](assets/layout_search_validate.jpg)
 

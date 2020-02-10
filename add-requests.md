@@ -219,15 +219,36 @@ Here is the updated code:
 
 Our next scenario is to load a live location placeholder on the Thank You screen. The request that we add here will serve an offer that depends on the user's trip destination, so this will need to be a real-time location. Target needs to determine the right offer at the time of the booking. A prefetched cached offer won't work here, since we wouldn't know the user's destination before they had selected it.
 
-Now let's add a real-time location placeholder on the Thank You screen. In the ThankYouActivity file, we'll add the code shown in red. Comment out the lines shown. We'll be using that code to display offers later on.
+Now let's add a real-time location placeholder on the Thank You screen. In the ThankYouActivity file, we'll modify and add the code shown in red. Comment out the lines shown. We'll be using that code to display offers later on.
 
 ![Add a Real-time location on the Thank You Screen](assets/thankyou.jpg)
 
-Here is the code to add to the ThankYouActivity:
+Add the targetLoadRequest method at the end of the file:
+
+![Add a Real-time location on the Thank You Screen 2](assets/thankyou2.jpg)
+
+Here are the code snippets::
 
 ```java
-// Add this line to the getRecommandations() method:
-targetLoadRequest(recommandation.recommandations);
+// Comment out these lines in the getRecommendations() method & add the targLoadRequest request:
+public void getRecommandations(){
+    GetJSON getJSON = new GetJSON(this,Constant.json_recommandation) {
+        @Override
+        public void response(String response) {
+            try {
+                Gson gson = new Gson();
+                Recommandation recommandation = gson.fromJson(response,Recommandation.class);
+            //    AppDialogs.dialogLoaderHide();
+            //    recommandations.addAll(recommandation.recommandations);
+            //    recommandationbAdapter.notifyDataSetChanged();
+                targetLoadRequest(recommandation.recommandations);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    };
+    getJSON.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+}
 
 // Add this code block after the filterRecommendationBasedOnOffer() method:
 public void targetLoadRequest(final ArrayList<Recommandation> recommandations) {
@@ -235,21 +256,20 @@ public void targetLoadRequest(final ArrayList<Recommandation> recommandations) {
     Target.loadRequest(Constant.wetravel_context_dest, "", null, null, null, new Target.TargetCallback<String>() {
         @Override
         public void call(final String response) {
-        try {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    AppDialogs.dialogLoaderHide();
-                    // filterRecommendationBasedOnOffer(recommandations, response);
-                    // recommandationbAdapter.notifyDataSetChanged();
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            try {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        AppDialogs.dialogLoaderHide();
+                        filterRecommendationBasedOnOffer(recommandations, response);
+                        recommandationbAdapter.notifyDataSetChanged();
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     });
-    Target.clearPrefetchCache();
 }
 ```
 

@@ -29,7 +29,7 @@ Select Adobe Target and you'll be logged in to the Target UI where you can creat
 
 ## Create Audiences for New and Returning Users
 
-Adobe Target Audiences are used to identify specific groups of visitors. Offers can then be targeted to those specific groups. For the first two locations, we'll use a "New Users" audience and a "Returning Users (after 30+ days)" audience.
+Adobe Target Audiences are used to identify specific groups of visitors. Offers can then be targeted to those specific groups. For the first two locations, we'll use a "New Users" audience and a "Returning Users" audience.
 
 Messages for the first two locations will be displayed in the app as follows:
 
@@ -37,8 +37,8 @@ Messages for the first two locations will be displayed in the app as follows:
 | --- | --- | --- |
 | New Users | wetravel_engage_home | "Select your Origin & Destination to search for available bus routes" |
 | New Users | wetravel_engage_search | "Use filters to narrow down your search results" |
-| Returning Users (after 30+ days) | wetravel_engage_home | "Welcome back! Use promo code BACK30 during checkout to get a 10% discount." |
-| Returning Users (after 30+ days) | wetravel_engage_search | default content |
+| Returning Users | wetravel_engage_home | "Welcome back! Use promo code BACK30 during checkout to get a 10% discount." |
+| Returning Users | wetravel_engage_search | default content |
 
 The "wetravel_engage_home" and "wetravel_engage_search" locations are located on the home and search results screens. They will be used to help engage users to search for bus trips. We'll need audience segments built that target new and returning users so we can display relevant messages to users. Let's use the lifecycle metric "a.DaysSinceFirstUse" to build those audiences. 
 
@@ -58,19 +58,19 @@ The "wetravel_engage_home" and "wetravel_engage_search" locations are located on
 
 ![Create a New User Audience](assets/audience_new_mobile_app_users_2.jpg)
 
-(6) Select a.DaysSinceFirstUse
+(6) Select a.Launches
 (7) Select "is less than"
-(8) Enter "2"
+(8) Enter "5"
 (9) Save the new audience
 
 ![Create a New User Audience](assets/audience_new_mobile_app_users_3.jpg)
 
 ### Create the Returning Users Audience
 
-Follow the same steps listed above to create an audience for users who return after 30+ days.
+Follow the same steps listed above to create an audience for users who return at 5 or more app launches.
 
-(1) Name the audience "Returning Mobile App Users (after 30+ days)
-(2) Use "a.DaysSinceLastUse is greater than 30" as the custom rule
+(1) Name the audience "Returning Mobile App Users"
+(2) Use "a.Launches is greater than or equal to 5" as the custom rule
 (3) Save the new audience
 
 ![Create a Returning User Audience](assets/audience_returning_mobile_app_users.jpg)
